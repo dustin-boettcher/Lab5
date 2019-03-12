@@ -129,11 +129,11 @@ int main(void){
   EnableInterrupts();
   uint16_t S=0;	
   while(1){
-		PE50 = FSM[S].Output; //Output
-		PA4 = FSM[S].flash; //Output
+		GPIO_PORTE_DATA_R = FSM[S].Output; //Output
+		GPIO_PORTA_DATA_R = ((FSM[S].flash)<<4); //Output
 		SysTick_Wait1ms(FSM[S].Time); //wait
-		input = (GPIO_PORTA_DATA_R&(0x20)>>5)+(GPIO_PORTA_DATA_R&(0x10)>>3); // input should be the two buttons
-    S=FSM[S].next[input];// next		
+		input = ((GPIO_PORTA_DATA_R&(0x20)>>5)+(GPIO_PORTA_DATA_R&(0x10)>>3))&(3); // input should be the two buttons
+    S=FSM[S].next[input];// next	
   }
 }
 
