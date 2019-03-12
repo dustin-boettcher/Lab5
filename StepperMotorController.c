@@ -48,7 +48,7 @@ typedef const struct State STyp;
 	#define initial_on 20
 	
 STyp FSM[40] = {
-	{0, 0, 50, {initial, initial_on, p1off, 21}}, //initial
+	{1, 1, 50, {initial, initial_on, p1off, 21}}, //initial
 	{1, 0, 50, {2, 2, 2, 2}}, //steps through all 20 states when windshield wiper pressed
 	{2, 0, 50, {3, 22, 3, 22}},
 	{4, 0, 50, {4, 4, 4, 4}},
