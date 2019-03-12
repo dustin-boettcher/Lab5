@@ -24,38 +24,61 @@ struct State {
 	uint16_t next[4];
 };
 typedef const struct State STyp;
+
+#define initial 0
+	#define p1off 1
+	#define p2off 2
+	#define p3off 3
+	#define p4off 4
+	#define p5off 5
+	#define p6off 6
+	#define p7off 7
+	#define p8off 8
+	#define p9off 9
+	#define p10off 10
+	#define p11off 11
+	#define p12off 12
+	#define p13off 13
+	#define p14off 14
+	#define p15off 15
+	#define p16off 16
+	#define p17off 17
+	#define p18off 18
+	#define p19off 19
+	#define initial_on 20
+	
 STyp FSM[40] = {
-	{0, 0, 50, {0, 0, 1, 0}}, //initial
-	{1, 0, 50, {2, 0, 2, 0}}, //steps through all 20 states when windshield wiper pressed
-	{2, 0, 50, {3, 0, 3, 0}},
-	{4, 0, 50, {4, 0, 4, 0}},
+	{0, 0, 50, {initial, initial_on, p1off, 21}}, //initial
+	{1, 0, 50, {2, 2, 2, 2}}, //steps through all 20 states when windshield wiper pressed
+	{2, 0, 50, {3, 22, 3, 22}},
+	{4, 0, 50, {4, 4, 4, 4}},
 	{8, 0, 50, {5, 0, 5, 0}},
-	{16, 0, 50, {6, 0, 6, 0}},
+	{16, 0, 50, {6, 6, 6, 6}},
 	{1, 0, 50, {7, 0, 7, 0}},
-	{2, 0, 50, {8, 0, 8, 0}},
+	{2, 0, 50, {8, 8, 8, 8}},
 	{4, 0, 50, {9, 0, 9, 0}},
-	{8, 0, 50, {10, 0, 10, 0}},
+	{8, 0, 50, {10, 10, 10, 10}},
 	{16, 0, 50, {11, 0, 11, 0}},
-	{8, 0, 50, {12, 0, 12, 0}},
+	{8, 0, 50, {12, 12, 12, 12}},
 	{4, 0, 50, {13, 0, 13, 0}},
-	{2, 0, 50, {14, 0, 14, 0}},
+	{2, 0, 50, {14, 14, 14, 14}},
 	{1, 0, 50, {15, 0, 15, 0}},
-	{16, 0, 50, {16, 0, 16, 0}},
+	{16, 0, 50, {16, 16, 16, 16}},
 	{8, 0, 50, {17, 0, 17, 0}},
-	{4, 0, 50, {18, 0, 18, 0}},
+	{4, 0, 50, {18, 18, 18, 18}},
 	{2, 0, 50, {19, 0, 19, 0}},
 	{1, 0, 50, {0, 0, 0, 0}}, //19
-	{0, 0, 0, {0, 0, 0, 0}},
-	{0, 0, 0, {0, 0, 0, 0}},
-	{0, 0, 0, {0, 0, 0, 0}},
-	{0, 0, 0, {0, 0, 0, 0}},
-	{0, 0, 0, {0, 0, 0, 0}},
-	{0, 0, 0, {0, 0, 0, 0}},
-	{0, 0, 0, {0, 0, 0, 0}},
-	{0, 0, 0, {0, 0, 0, 0}},
-	{0, 0, 0, {0, 0, 0, 0}},
-	{0, 0, 0, {0, 0, 0, 0}},
-	{0, 0, 0, {0, 0, 0, 0}},
+	{0, 1, 50, {0, 0, 0, 0}}, //on state for initial
+	{1, 1, 50, {2, 22, 2, 22}}, //21 - 1
+	{0, 0, 0, {3, 23, 3, 23}}, //22 - 2
+	{0, 0, 0, {4, 24, 4, 24}}, //23 - 3
+	{0, 0, 0, {5, 25, 5, 25}}, //24 -4
+	{0, 0, 0, {6, 6, 6, 6}}, //25 - 5
+	{0, 0, 0, {12, 27, 12, 27}}, //26 - 11
+	{0, 0, 0, {0, 0, 0, 0}}, //27 - 12
+	{0, 0, 0, {0, 0, 0, 0}}, //28- 13
+	{0, 0, 0, {0, 0, 0, 0}}, //29 - 14
+	{0, 0, 0, {0, 0, 0, 0}}, //30 - 15
 	{0, 0, 0, {0, 0, 0, 0}},
 	{0, 0, 0, {0, 0, 0, 0}},
 	{0, 0, 0, {0, 0, 0, 0}},
@@ -65,6 +88,9 @@ STyp FSM[40] = {
 	{0, 0, 0, {0, 0, 0, 0}},
 	{0, 0, 0, {0, 0, 0, 0}},
 	{0, 0, 0, {0, 0, 0, 0}}
+	
+	
+	
 	
 	
 	
@@ -79,7 +105,10 @@ void SendDataToLogicAnalyzer(void){
   UART0_DR_R = 0x80|(PA4<<2)|PE50;
 }
 
-void IOinit(){
+int main(void){ 
+  TExaS_Init(&SendDataToLogicAnalyzer);    // activate logic analyzer and set system clock to 80 MHz
+  SysTick_Init();   
+// you initialize your system here
 	
 	SYSCTL_RCGCGPIO_R|=0x33;
 	while(SYSCTL_RCGCGPIO_R&=0x33==0){}
@@ -95,24 +124,16 @@ void IOinit(){
 	
 	GPIO_PORTF_DEN_R|=0x1;
 	GPIO_PORTF_DIR_R|=0x1;
-}
 
-
-int main(void){ 
-  TExaS_Init(&SendDataToLogicAnalyzer);    // activate logic analyzer and set system clock to 80 MHz
-  SysTick_Init();   
-// you initialize your system here
-	
-	
 	
   EnableInterrupts();
   uint16_t S=0;	
   while(1){
-     PE50 = FSM[S].Output; //Output
-     PA4 = FSM[S].flash; //Output
-     SysTick_Wait1ms(FSM[S].Time); //wait
-     input = (GPIO_PORTA_DATA_R&(0x20)>>5)+(GPIO_PORTA_DATA_R&(0x10)>>3); // input should be the two buttons 
-     S=FSM[S].next[input];// next		
+		PE50 = FSM[S].Output; //Output
+		PA4 = FSM[S].flash; //Output
+		SysTick_Wait1ms(FSM[S].Time); //wait
+		input = (GPIO_PORTA_DATA_R&(0x20)>>5)+(GPIO_PORTA_DATA_R&(0x10)>>3); // input should be the two buttons
+    S=FSM[S].next[input];// next		
   }
 }
 
