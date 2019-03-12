@@ -79,6 +79,25 @@ void SendDataToLogicAnalyzer(void){
   UART0_DR_R = 0x80|(PA4<<2)|PE50;
 }
 
+void IOinit(){
+	
+	SYSCTL_RCGCGPIO_R|=0x33;
+	while(SYSCTL_RCGCGPIO_R&=0x33==0){}
+	
+	GPIO_PORTA_DEN_R|=0x30;
+	GPIO_PORTA_DIR_R&=0xCF;
+	
+	GPIO_PORTB_DEN_R|=0x40;
+	GPIO_PORTB_DIR_R|=0x40;
+	
+	GPIO_PORTE_DEN_R|=0x3F;
+	GPIO_PORTE_DIR_R|=0x3F;
+	
+	GPIO_PORTF_DEN_R|=0x1;
+	GPIO_PORTF_DIR_R|=0x1;
+}
+
+
 int main(void){ 
   TExaS_Init(&SendDataToLogicAnalyzer);    // activate logic analyzer and set system clock to 80 MHz
   SysTick_Init();   
