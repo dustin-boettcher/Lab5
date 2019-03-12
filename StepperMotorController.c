@@ -108,6 +108,7 @@ void SendDataToLogicAnalyzer(void){
 int main(void){ 
   TExaS_Init(&SendDataToLogicAnalyzer);    // activate logic analyzer and set system clock to 80 MHz
   SysTick_Init();   
+  uint16_t S=0;	
 // you initialize your system here
 	
 	SYSCTL_RCGCGPIO_R|=0x33;
@@ -127,7 +128,6 @@ int main(void){
 
 	
   EnableInterrupts();
-  uint16_t S=0;	
   while(1){
 		GPIO_PORTE_DATA_R = FSM[S].Output; //Output
 		GPIO_PORTA_DATA_R = ((FSM[S].flash)<<4); //Output
