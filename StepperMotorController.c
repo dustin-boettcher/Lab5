@@ -48,53 +48,54 @@ typedef const struct State STyp;
 	#define initial_on 20
 	
 STyp FSM[40] = {
-	{1, 1, 50, {initial, initial_on, p1off, 21}}, //initial
-	{1, 0, 50, {2, 2, 2, 2}}, //steps through all 20 states when windshield wiper pressed
-	{2, 0, 50, {3, 22, 3, 22}},
+	{1, 0, 1, {1, 1, 1, 1}},    //Initialize
+	{1, 0, 50, {1, 19, 2, 1}}, //Home
+	
+//Wipe Only
+	{2, 0, 50, {3, 3, 3, 3}},
 	{4, 0, 50, {4, 4, 4, 4}},
-	{8, 0, 50, {5, 0, 5, 0}},
+	{8, 0, 50, {5, 5, 5, 5}},
 	{16, 0, 50, {6, 6, 6, 6}},
-	{1, 0, 50, {7, 0, 7, 0}},
+	{1, 0, 50, {7, 7, 7, 7}},
 	{2, 0, 50, {8, 8, 8, 8}},
-	{4, 0, 50, {9, 0, 9, 0}},
+	{4, 0, 50, {9, 9, 9, 9}},
 	{8, 0, 50, {10, 10, 10, 10}},
-	{16, 0, 50, {11, 0, 11, 0}},
+	{16, 0, 50, {11, 11, 11, 11}},
 	{8, 0, 50, {12, 12, 12, 12}},
-	{4, 0, 50, {13, 0, 13, 0}},
+	{4, 0, 50, {13, 13, 13, 13}},
 	{2, 0, 50, {14, 14, 14, 14}},
-	{1, 0, 50, {15, 0, 15, 0}},
+	{1, 0, 50, {15, 15, 15, 15}},
 	{16, 0, 50, {16, 16, 16, 16}},
-	{8, 0, 50, {17, 0, 17, 0}},
+	{8, 0, 50, {17, 17, 17, 17}},
 	{4, 0, 50, {18, 18, 18, 18}},
-	{2, 0, 50, {19, 0, 19, 0}},
-	{1, 0, 50, {0, 0, 0, 0}}, //19
-	{0, 1, 50, {0, 0, 0, 0}}, //on state for initial
-	{1, 1, 50, {2, 22, 2, 22}}, //21 - 1
-	{0, 0, 0, {3, 23, 3, 23}}, //22 - 2
-	{0, 0, 0, {4, 24, 4, 24}}, //23 - 3
-	{0, 0, 0, {5, 25, 5, 25}}, //24 -4
-	{0, 0, 0, {6, 6, 6, 6}}, //25 - 5
-	{0, 0, 0, {12, 27, 12, 27}}, //26 - 11
-	{0, 0, 0, {0, 0, 0, 0}}, //27 - 12
-	{0, 0, 0, {0, 0, 0, 0}}, //28- 13
-	{0, 0, 0, {0, 0, 0, 0}}, //29 - 14
-	{0, 0, 0, {0, 0, 0, 0}}, //30 - 15
-	{0, 0, 0, {0, 0, 0, 0}},
-	{0, 0, 0, {0, 0, 0, 0}},
-	{0, 0, 0, {0, 0, 0, 0}},
-	{0, 0, 0, {0, 0, 0, 0}},
-	{0, 0, 0, {0, 0, 0, 0}},
-	{0, 0, 0, {0, 0, 0, 0}},
-	{0, 0, 0, {0, 0, 0, 0}},
-	{0, 0, 0, {0, 0, 0, 0}},
-	{0, 0, 0, {0, 0, 0, 0}}
+	{2, 0, 50, {1, 1, 1, 1}},
 	
-	
-	
-	
-	
-	
+//Wash and Wipe
+	{2, 1, 50, {20, 20, 20, 20}},
+	{4, 0, 50, {21, 21, 21, 21}},
+	{8, 1, 50, {22, 22, 22, 22}},
+	{16, 0, 50, {23, 23, 23, 23}},
+	{1, 1, 50, {24, 24, 24, 24}},
+	{2, 0, 50, {25, 25, 25, 25}},
+	{4, 1, 50, {26, 26, 26, 26}},
+	{8, 0, 50, {27, 27, 27, 27}},
+	{16, 1, 50, {28, 28, 28, 28}},
+	{8, 0, 50, {29, 29, 29, 29}},
+	{4, 1, 50, {30, 30, 30, 30}},
+	{2, 0, 50, {31, 31, 31, 31}},
+	{1, 1, 50, {32, 32, 32, 32}},
+	{16, 0, 50, {33, 33, 33, 33}},
+	{8, 1, 50, {34, 34, 34, 34}},
+	{4, 0, 50, {35, 35, 35, 35}},
+	{2, 1, 50, {1, 1, 1, 1}},
 };
+	
+	
+	
+	
+	
+	
+	
 void EnableInterrupts(void);
 // edit the following only if you need to move pins from PA4, PE3-0      
 // logic analyzer on the real board
@@ -106,13 +107,15 @@ void SendDataToLogicAnalyzer(void){
 }
 
 int main(void){ 
+	
+	uint16_t S=0;
   TExaS_Init(&SendDataToLogicAnalyzer);    // activate logic analyzer and set system clock to 80 MHz
   SysTick_Init();   
-  uint16_t S=0;	
-// you initialize your system here
-	
+  
+		
 	SYSCTL_RCGCGPIO_R|=0x33;
-	while(SYSCTL_RCGCGPIO_R&=0x33==0){}
+	while((SYSCTL_RCGCGPIO_R&0x33)!=0x33){
+	}
 	
 	GPIO_PORTA_DEN_R|=0x30;
 	GPIO_PORTA_DIR_R&=0xCF;
@@ -123,18 +126,26 @@ int main(void){
 	GPIO_PORTE_DEN_R|=0x3F;
 	GPIO_PORTE_DIR_R|=0x3F;
 	
-	GPIO_PORTF_DEN_R|=0x1;
-	GPIO_PORTF_DIR_R|=0x1;
+	//GPIO_PORTF_DEN_R|=0x1;
+	//GPIO_PORTF_DIR_R|=0x1;
+	
 
 	
   EnableInterrupts();
+	
+
   while(1){
 		GPIO_PORTE_DATA_R = FSM[S].Output; //Output
-		GPIO_PORTA_DATA_R = ((FSM[S].flash)<<4); //Output
+		
+		GPIO_PORTE_DATA_R &= 0xEF;
+		GPIO_PORTE_DATA_R += (FSM[S].flash<<5);
+		
 		SysTick_Wait1ms(FSM[S].Time); //wait
-		input = ((GPIO_PORTA_DATA_R&(0x20)>>5)+(GPIO_PORTA_DATA_R&(0x10)>>3))&(3); // input should be the two buttons
+		
+		input = (GPIO_PORTA_DATA_R & 0x30); // input should be the two buttons
+		input = input>>4;
+		
     S=FSM[S].next[input];// next	
   }
 }
-
 
