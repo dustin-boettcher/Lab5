@@ -1,15 +1,13 @@
 // SysTick.c
 // Runs on TM4C123
 // Provide functions that initialize the SysTick module
-// Put your name here
-
-// October 5, 2018
+// Dustin Boettcher, Chris Clark
+// March 13, 2019
 
 /* This example accompanies the book
    "Embedded Systems: Real Time Interfacing to Arm Cortex M Microcontrollers",
    ISBN: 978-1463590154, Jonathan Valvano, copyright (c) 2018
    Program 2.11, Section 2.6
-
  Copyright 2018 by Jonathan W. Valvano, valvano@mail.utexas.edu
     You may use, edit, run or distribute this file
     as long as the above copyright notice remains
@@ -55,4 +53,3 @@ void SysTick_Wait10ms(uint32_t delay){
    SysTick_Wait(800000); // wait 10ms
 	}
 }
-
